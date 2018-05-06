@@ -8,13 +8,13 @@ export type CredentialStateT = {
   password: string;
 };
 
-const initial: CredentialStateT = {
+export const initialState: CredentialStateT = {
   alias: '',
   username: '',
   password: ''
 };
 
-export function credentialReducer(state: CredentialStateT = initial, action: Actions): CredentialStateT {
+export function credentialReducer(state: CredentialStateT = initialState, action: Actions): CredentialStateT {
   switch (action.type) {
     case ActionTypes.CREDENTIAL_PUT_ALIAS:
       // return { ...state, ...{ alias: (<CredentialPutAliasAction>action).alias } };
@@ -29,7 +29,7 @@ export function credentialReducer(state: CredentialStateT = initial, action: Act
       return Object.assign({}, state, { password: (<CredentialPutPasswordAction>action).password });
 
     case ActionTypes.CREDENTIAL_DELETE:
-      return initial;
+      return initialState;
 
     default:
       return state;

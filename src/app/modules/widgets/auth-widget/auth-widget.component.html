@@ -1,30 +1,30 @@
-<md-toolbar color="primary">
-  <md-icon *ngIf="viewStack.length > 1" (click)="transitBackward()" [style.cursor]="'pointer'">
+<mat-toolbar color="primary">
+  <mat-icon *ngIf="viewStack.length > 1" (click)="transitBackward()" [style.cursor]="'pointer'">
     chevron_left
-  </md-icon>
-</md-toolbar>
+  </mat-icon>
+</mat-toolbar>
 
-<template #landingRef>
-  <md-tab-group md-stretch-tabs (selectChange)="tabIndex$.next($event.index)"  [selectedIndex]="tabIndex$ | async">
-    <md-tab label="LOG IN">
-      <msp-login-widget (forgotPassword)="onForgotPassword()"></msp-login-widget>
-    </md-tab>
-    <md-tab label="SIGN UP">
+<ng-template #landingRef>
+  <mat-tab-group mat-stretch-tabs (selectChange)="tabIndex$.next($event.index)"  [selectedIndex]="tabIndex$ | async">
+    <mat-tab label="LOG IN">
+      <msp-login-widget (forgotPassword)="onForgotPassword()" (resetPasswordRequired)="onResetPasswordRequired()"></msp-login-widget>
+    </mat-tab>
+    <mat-tab label="SIGN UP">
       <msp-signup-widget></msp-signup-widget>
-    </md-tab>
-  </md-tab-group>
-</template>
+    </mat-tab>
+  </mat-tab-group>
+</ng-template>
 
-<template #forgotPasswordRef>
+<ng-template #forgotPasswordRef>
   <msp-forgot-password-widget></msp-forgot-password-widget>
-</template>
+</ng-template>
 
-<template #confirmNewPasswordRef>
+<ng-template #confirmNewPasswordRef>
   <msp-confirm-new-password-widget></msp-confirm-new-password-widget>
-</template>
+</ng-template>
 
-<template #confirmRegistrationRef>
+<ng-template #confirmRegistrationRef>
   <msp-confirm-registration-widget></msp-confirm-registration-widget>
-</template>
+</ng-template>
 
-<template #targetRef></template>
+<ng-template #targetRef></ng-template>

@@ -16,7 +16,7 @@ import * as fromCurrent from '../../../../../ngrx/auth/current/current.store';
   selector: 'msp-confirm-new-password-widget',
   templateUrl: './confirm-new-password-widget.component.html',
   styleUrls: ['./confirm-new-password-widget.component.css'],
-  animations: [Animations.swipeInOut],
+  // animations: [Animations.swipeInOut],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmNewPasswordWidgetComponent implements OnInit, OnDestroy {
@@ -35,7 +35,7 @@ export class ConfirmNewPasswordWidgetComponent implements OnInit, OnDestroy {
     this.submit$
       .withLatestFrom(this.codeValidator$, this.passwordValidator$)
       .map(([_, codeValidator, passwordValidator]) => [codeValidator, passwordValidator])
-      .filter<[ValidT<CodeT>, ValidT<PasswordT>]>(([mobileValidator, passwordValidator]) =>
+      .filter(([mobileValidator, passwordValidator]) =>
         mobileValidator.isValid && passwordValidator.isValid)
       .withLatestFrom(
         this.store.select(fromCredential.getCredentialState)
@@ -44,15 +44,15 @@ export class ConfirmNewPasswordWidgetComponent implements OnInit, OnDestroy {
         )
       .subscribe(([validators, alias]) => {
         const [codeValidator, passwordValidator] = validators;
-        const code = codeValidator.payload.code;
-        const password = passwordValidator.payload.password;
+        const code = (<ValidT<CodeT>>codeValidator).payload.code;
+        const password = (<ValidT<PasswordT>>passwordValidator).payload.password;
         this.store.dispatch(new fromConfirmNewPassword.ConfirmNewPasswordRequestAction(alias, code, password));
         this.store.dispatch(new fromCredential.CredentialPutPasswordAction(password));
       });
 
     this.store.select(fromConfirmNewPassword.getConfirmNewPasswordState)
       .takeUntil(this.onDestroy$)
-      .filter<fromConfirmNewPassword.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .withLatestFrom(
         this.store.select(fromCredential.getCredentialState)
           .takeUntil(this.onDestroy$)
@@ -62,7 +62,7 @@ export class ConfirmNewPasswordWidgetComponent implements OnInit, OnDestroy {
 
     this.store.select(fromLogin.getLoginState)
       .takeUntil(this.onDestroy$)
-      .filter<fromLogin.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .subscribe(() => this.store.dispatch(new fromCurrent.CurrentRequestAction()));
   }
 

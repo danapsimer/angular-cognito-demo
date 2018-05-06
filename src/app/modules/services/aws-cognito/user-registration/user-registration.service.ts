@@ -39,7 +39,7 @@ export class UserRegistrationService {
     attributeList.push(new CognitoUserAttribute(dataPhoneNumber));
 
     return Observable.create((observer: Observer<{ username: string }>) => {
-      const username = this._usernameFactory();
+      const username = dataPhoneNumber.Value;
 
       this._userPoolFactory().signUp(username, password, attributeList, [], (error, result) => {
         if (error) {

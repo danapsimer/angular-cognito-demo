@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export type MobileContentT = {
   countryName: string,
@@ -16,7 +16,7 @@ export type SelectViewContentT = {
 export class MobileContentService {
 
   getAllCountryNameCodeList(): string[] {
-    return ['HK', 'CN'];
+    return ['US', 'HK', 'CN'];
   }
 
   getFormat(countryNameCode: string): string {
@@ -30,14 +30,21 @@ export class MobileContentService {
           countryName: 'China',
           countryCallCode: '+86',
           format: '131 2345 6789',
-          regex: /^(\+?0?86\-?)?((13\d|14[57]|15[^4,\D]|17[678]|18\d)\d{8}|170[059]\d{7})$/
+          regex: /^(\+?0?86\-?)? ?((13\d|14[57]|15[^4,\D]|17[678]|18\d)\d{8}|170[059]\d{7})$/
         };
       case 'HK':
         return {
           countryName: 'Hong Kong',
           countryCallCode: '+852',
           format: '5123 4567',
-          regex: /^(\+?852\-?)?[569]\d{3}\-?\d{4}$/
+          regex: /^(\+?852\-?)? ?([569]\d{3}\-?\d{4})$/
+        };
+      case 'US':
+        return {
+          countryName: 'United States',
+          countryCallCode: '+1',
+          format: '(###) ###-####',
+          regex: /^(\+?0?0?1\-?)? ?(\(?\d{3}\)? ?\d{3}\-?\d{4})$/
         };
       default:
         return {
@@ -47,6 +54,10 @@ export class MobileContentService {
           regex: /./
         };
     }
+  }
+
+  inferCountryCode(phoneNumber: string): string {
+    return this.getAllCountryNameCodeList().find(code => phoneNumber.match(this.getContent(code).regex) != null);
   }
 
   getCountryCallCode(countryNameCode: string): string {

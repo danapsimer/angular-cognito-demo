@@ -8,17 +8,18 @@ import { FormValidationService, ValidationT, MobileNumberT } from '../../service
 import { Animations } from '../animations';
 
 import { Observable } from 'rxjs/Observable';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'msp-mobile-input',
   templateUrl: './mobile-input.component.html',
   styleUrls: ['./mobile-input.component.css'],
-  animations: [Animations.opacity],
+  // animations: [Animations.opacity],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileInputComponent implements OnInit {
 
-  @Input() tiggerValidationObservable: Observable<any>;
+  @Input() triggerValidationObservable: Observable<any>;
   @Output() validator = new EventEmitter<ValidationT<MobileNumberT>>();
 
   form: FormGroup;
@@ -35,11 +36,11 @@ export class MobileInputComponent implements OnInit {
     private formValidationService: FormValidationService
   ) {
     this.form = this.fb.group({
-      countryNameCode: 'HK',
+      countryNameCode: 'US',
       localNumber: '',
     });
 
-    this.selectContent = ['HK', 'CN']
+    this.selectContent = ['US', 'HK', 'CN']
       .map(value => {
         return {
           value: value,
@@ -71,14 +72,14 @@ export class MobileInputComponent implements OnInit {
       .skip(1);
 
     this.isInputting$ = this.userInteractionService
-      .isInputting$(Observable.merge(mobileNumber$, this.tiggerValidationObservable))
+      .isInputting$(Observable.merge(mobileNumber$, this.triggerValidationObservable))
       .startWith(true);
 
     this.validator$ = this.isInputting$
       .filter(isInputting => !isInputting)
       .withLatestFrom(countryNameCode$, localNumber$)
       .map(([_, countryNameCode, localNumber]) => this.formValidationService.mobileNumberValidator(countryNameCode, localNumber))
-      .do(validation => this.validator.emit(validation));
+      .pipe(tap(validation => this.validator.emit(validation)));
   }
 
 }

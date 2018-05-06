@@ -19,7 +19,9 @@ export type OnResetT = {
 
 export type LoginStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function loginReducer(state: LoginStateT = { current: null }, action: Actions): LoginStateT {
+export const initialState: LoginStateT = { current: null };
+
+export function loginReducer(state: LoginStateT = initialState, action: Actions): LoginStateT {
   switch (action.type) {
     case ActionTypes.LOGIN_REQUEST:
       return { current: 'onProcess' };
@@ -34,7 +36,7 @@ export function loginReducer(state: LoginStateT = { current: null }, action: Act
       };
 
     case ActionTypes.LOGIN_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

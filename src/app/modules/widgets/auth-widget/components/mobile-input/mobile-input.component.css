@@ -1,0 +1,14 @@
+.mobile-input {
+  width: 100%;
+}
+.mobile-input-hint {
+  color: red
+}
+
+.mobile-input mat-icon {
+  margin-right: 20px;
+}
+
+.mobile-input mat-select {
+  margin-right: 10px;
+}

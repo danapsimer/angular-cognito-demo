@@ -15,8 +15,7 @@ import { UserLoginService } from '../../../modules/services/aws-cognito/user-log
 export class ForgotPasswordEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.FORGOT_PASSWORD_REQUEST)
-    .filter<ForgotPasswordRequestAction>(action => action instanceof ForgotPasswordRequestAction)
+    .ofType<ForgotPasswordRequestAction>(ActionTypes.FORGOT_PASSWORD_REQUEST)
     .switchMap(
       action => this.userLoginService.forgotPassword$(action.alias)
         .mapTo(new ForgotPasswordSuccessAction())

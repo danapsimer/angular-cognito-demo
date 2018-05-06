@@ -1,11 +1,11 @@
-import { Inject, Injectable, OpaqueToken } from '@angular/core';
+import {Inject, Injectable, InjectionToken} from '@angular/core';
 import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js';
 
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-export const PoolData = new OpaqueToken('AWS_POOL_DATA');
-export const IdentityPoolId = new OpaqueToken('AWS_IDENTITY_POOL_ID');
+export const PoolData = new InjectionToken('AWS_POOL_DATA');
+export const IdentityPoolId = new InjectionToken('AWS_IDENTITY_POOL_ID');
 
 export type PoolDataT = {
   UserPoolId: string;

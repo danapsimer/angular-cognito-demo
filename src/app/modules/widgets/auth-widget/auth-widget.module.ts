@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
-import { AuthWidgetComponent } from './auth-widget.component';
-import { AuthDialogButtonComponent } from './components/auth-dialog-button/auth-dialog-button.component';
-import { AuthLogoutButtonComponent } from './components/auth-logout-button/auth-logout-button.component';
-import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
-import { SignupWidgetComponent } from './components/signup-widget/signup-widget.component';
-import { ForgotPasswordWidgetComponent } from './components/forgot-password-widget/forgot-password-widget.component';
-import { ConfirmRegistrationWidgetComponent } from './components/confirm-registration-widget/confirm-registration-widget.component';
-import { ConfirmNewPasswordWidgetComponent } from './components/confirm-new-password-widget/confirm-new-password-widget.component';
-import { MobileInputComponent } from './components/mobile-input/mobile-input.component';
-import { PasswordInputComponent } from './components/password-input/password-input.component';
-import { CodeInputComponent } from './components/code-input/code-input.component';
+import {CustomMaterialModule} from '../../common/custom-material-module';
+
+import {AuthWidgetComponent} from './auth-widget.component';
+import {AuthDialogButtonComponent} from './components/auth-dialog-button/auth-dialog-button.component';
+import {AuthLogoutButtonComponent} from './components/auth-logout-button/auth-logout-button.component';
+import {LoginWidgetComponent} from './components/login-widget/login-widget.component';
+import {SignupWidgetComponent} from './components/signup-widget/signup-widget.component';
+import {ForgotPasswordWidgetComponent} from './components/forgot-password-widget/forgot-password-widget.component';
+import {ConfirmRegistrationWidgetComponent} from './components/confirm-registration-widget/confirm-registration-widget.component';
+import {ConfirmNewPasswordWidgetComponent} from './components/confirm-new-password-widget/confirm-new-password-widget.component';
+import {MobileInputComponent} from './components/mobile-input/mobile-input.component';
+import {PasswordInputComponent} from './components/password-input/password-input.component';
+import {CodeInputComponent} from './components/code-input/code-input.component';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -38,7 +39,7 @@ import 'rxjs/add/observable/combineLatest';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
+    CustomMaterialModule,
     ReactiveFormsModule,
     FlexLayoutModule
   ],
@@ -63,4 +64,5 @@ import 'rxjs/add/observable/combineLatest';
     AuthWidgetComponent
   ]
 })
-export class AuthWidgetModule { }
+export class AuthWidgetModule {
+}

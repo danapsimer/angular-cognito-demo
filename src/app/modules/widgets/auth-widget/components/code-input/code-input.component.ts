@@ -7,12 +7,13 @@ import { FormValidationService, ValidationT, CodeT } from '../../services/form-v
 import { Animations } from '../animations';
 
 import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'msp-code-input',
   templateUrl: './code-input.component.html',
   styleUrls: ['./code-input.component.css'],
-  animations: [Animations.opacity],
+  // animations: [Animations.opacity],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CodeInputComponent implements OnInit {
@@ -46,6 +47,6 @@ export class CodeInputComponent implements OnInit {
       .filter(isInputting => !isInputting)
       .withLatestFrom(code$)
       .map(([_, code]) => this.formValidationService.codeValidator(code))
-      .do(validation => this.validator.emit(validation));
+      .pipe(tap(validation => this.validator.emit(validation)));
   }
 }

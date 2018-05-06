@@ -16,8 +16,7 @@ import { UserLoginService } from '../../../modules/services/aws-cognito/user-log
 export class ConfirmNewPasswordEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.CONFIRM_NEW_PASSWORD_REQUEST)
-    .filter<ConfirmNewPasswordRequestAction>(action => action instanceof ConfirmNewPasswordRequestAction)
+    .ofType<ConfirmNewPasswordRequestAction>(ActionTypes.CONFIRM_NEW_PASSWORD_REQUEST)
     .switchMap(
       action => this.userLoginService.confirmNewPassword$(
         action.alias,

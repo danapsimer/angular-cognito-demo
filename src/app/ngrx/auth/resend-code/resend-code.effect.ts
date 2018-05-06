@@ -10,8 +10,7 @@ import { UserRegistrationService } from '../../../modules/services/aws-cognito/u
 export class ResendCodeEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.RESEND_CODE_REQUEST)
-    .filter<ResendCodeRequestAction>(action => action instanceof ResendCodeRequestAction)
+    .ofType<ResendCodeRequestAction>(ActionTypes.RESEND_CODE_REQUEST)
     .switchMap(
       action => this.userRegistrationService.resendCode$(action.username)
         .mapTo(new ResendCodeSuccessAction())

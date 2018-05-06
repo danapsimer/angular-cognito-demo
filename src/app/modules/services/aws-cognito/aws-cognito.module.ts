@@ -3,7 +3,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CognitoUtilityService, PoolData, PoolDataT, IdentityPoolId } from './cognito-utility/cognito-utility.service';
 import { UserRegistrationService } from './user-registration/user-registration.service';
 import { UserLoginService } from './user-login/user-login.service';
-// import { HttpV4 } from './http-v4/http-v4.service';
 
 export { PoolDataT };
 
@@ -15,7 +14,6 @@ export class AwsCognitoModule {
     return {
       ngModule: AwsCognitoModule,
       providers: [
-        // HttpV4,
         CognitoUtilityService,
         UserLoginService,
         UserRegistrationService,

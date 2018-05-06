@@ -1,4 +1,4 @@
-import { Actions, ActionTypes, ConfirmNewPasswordSuccessAction, ConfirmNewPasswordFailureAction } from './confirm-new-password.action';
+import {Actions, ActionTypes, ConfirmNewPasswordSuccessAction, ConfirmNewPasswordFailureAction} from './confirm-new-password.action';
 
 export type OnProcessT = {
   current: 'onProcess';
@@ -19,14 +19,16 @@ export type OnResetT = {
 
 export type ConfirmNewPasswordStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function confirmNewPasswordReducer(state: ConfirmNewPasswordStateT = { current: null }, action: Actions): ConfirmNewPasswordStateT {
+export const initialState: ConfirmNewPasswordStateT = {current: null};
+
+export function confirmNewPasswordReducer(state: ConfirmNewPasswordStateT = initialState, action: Actions): ConfirmNewPasswordStateT {
 
   switch (action.type) {
     case ActionTypes.CONFIRM_NEW_PASSWORD_REQUEST:
-      return { current: 'onProcess' };
+      return {current: 'onProcess'};
 
     case ActionTypes.CONFIRM_NEW_PASSWORD_SUCCESS:
-      return { current: 'onSuccess' };
+      return {current: 'onSuccess'};
 
     case ActionTypes.CONFIRM_NEW_PASSWORD_FAILURE:
       return {
@@ -35,7 +37,7 @@ export function confirmNewPasswordReducer(state: ConfirmNewPasswordStateT = { cu
       };
 
     case ActionTypes.CONFIRM_NEW_PASSWORD_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

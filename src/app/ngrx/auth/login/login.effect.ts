@@ -10,8 +10,7 @@ import { UserLoginService } from '../../../modules/services/aws-cognito/user-log
 export class LoginEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.LOGIN_REQUEST)
-    .filter<LoginRequestAction>(action => action instanceof LoginRequestAction)
+    .ofType<LoginRequestAction>(ActionTypes.LOGIN_REQUEST)
     .switchMap(
       action => this.userLoginService.authenticate$(action.alias, action.password)
         .mapTo(new LoginSuccessAction())

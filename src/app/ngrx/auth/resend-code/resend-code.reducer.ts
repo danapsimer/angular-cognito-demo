@@ -19,7 +19,9 @@ export type OnResetT = {
 
 export type ResendCodeStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function resendCodeReducer(state: ResendCodeStateT = { current: null }, action: Actions): ResendCodeStateT {
+export const initialState: ResendCodeStateT = { current: null };
+
+export function resendCodeReducer(state: ResendCodeStateT = initialState, action: Actions): ResendCodeStateT {
   switch (action.type) {
     case ActionTypes.RESEND_CODE_REQUEST:
       return { current: 'onProcess' };
@@ -34,7 +36,7 @@ export function resendCodeReducer(state: ResendCodeStateT = { current: null }, a
       };
 
     case ActionTypes.RESEND_CODE_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

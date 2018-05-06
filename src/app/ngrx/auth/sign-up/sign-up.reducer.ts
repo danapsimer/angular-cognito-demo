@@ -21,7 +21,9 @@ export type OnResetT = {
 export type SignUpStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
 
-export function signUpReducer(state: SignUpStateT = { current: null }, action: Actions): SignUpStateT {
+export const initialState: SignUpStateT = { current: null };
+
+export function signUpReducer(state: SignUpStateT = initialState, action: Actions): SignUpStateT {
   switch (action.type) {
     case ActionTypes.SIGN_UP_REQUEST:
       return { current: 'onProcess' };
@@ -39,7 +41,7 @@ export function signUpReducer(state: SignUpStateT = { current: null }, action: A
       };
 
     case ActionTypes.SIGN_UP_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

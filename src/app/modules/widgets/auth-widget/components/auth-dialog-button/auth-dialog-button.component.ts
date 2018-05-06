@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { AuthWidgetComponent } from '../../auth-widget.component';
 
@@ -18,12 +18,12 @@ import { Subject } from 'rxjs/Subject';
 export class AuthDialogButtonComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<true>();
 
-  constructor(private dialog: MdDialog, private store: Store<AppStateT>) { }
+  constructor(private dialog: MatDialog, private store: Store<AppStateT>) { }
 
   ngOnInit() {
     this.store.select(fromCurrent.getCurrentState)
       .takeUntil(this.onDestroy$)
-      .filter<fromCurrent.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .subscribe(state => this.dialog.closeAll());
   }
 

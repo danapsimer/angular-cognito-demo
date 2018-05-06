@@ -24,13 +24,15 @@ export type OnResetT = {
 
 export type ForgotPasswordStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function forgotPasswordReducer(state: ForgotPasswordStateT = { current: null}, action: Actions): ForgotPasswordStateT {
+export const initialState: ForgotPasswordStateT = {current: null};
+
+export function forgotPasswordReducer(state: ForgotPasswordStateT = initialState, action: Actions): ForgotPasswordStateT {
   switch (action.type) {
     case ActionTypes.FORGOT_PASSWORD_REQUEST:
-      return { current: 'onProcess' };
+      return {current: 'onProcess'};
 
     case ActionTypes.FORGOT_PASSWORD_SUCCESS:
-      return { current: 'onSuccess' };
+      return {current: 'onSuccess'};
 
     case ActionTypes.FORGOT_PASSWORD_FAILURE:
       return {
@@ -39,7 +41,7 @@ export function forgotPasswordReducer(state: ForgotPasswordStateT = { current: n
       };
 
     case ActionTypes.FORGOT_PASSWORD_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

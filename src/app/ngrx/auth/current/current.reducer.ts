@@ -1,4 +1,4 @@
-import { Actions, ActionTypes, CurrentSuccessAction, CurrentFailureAction } from './current.action';
+import {Actions, ActionTypes, CurrentSuccessAction, CurrentFailureAction} from './current.action';
 
 export type OnProcessT = {
   current: 'onProcess';
@@ -11,7 +11,7 @@ export type OnSuccessT = {
 
 export type OnFailureT = {
   current: 'onFailure';
-  error: Error  ;
+  error: Error;
 };
 
 export type OnResetT = {
@@ -20,18 +20,20 @@ export type OnResetT = {
 
 export type CurrentStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function currentReducer(state: CurrentStateT = { current: null }, action: Actions): CurrentStateT {
+export const initialState: CurrentStateT = {current: null};
+
+export function currentReducer(state: CurrentStateT = initialState, action: Actions): CurrentStateT {
   switch (action.type) {
     case ActionTypes.CURRENT_INIT:
-      return { current: 'onProcess' };
+      return {current: 'onProcess'};
 
     case ActionTypes.CURRENT_REQUEST:
-      return { current: 'onProcess' };
+      return {current: 'onProcess'};
 
     case ActionTypes.CURRENT_SUCCESS:
       return {
         current: 'onSuccess',
-        payload: { username: (<CurrentSuccessAction>action).username, picture: (<CurrentSuccessAction>action).picture }
+        payload: {username: (<CurrentSuccessAction>action).username, picture: (<CurrentSuccessAction>action).picture}
       };
 
     case ActionTypes.CURRENT_FAILURE:
@@ -41,13 +43,13 @@ export function currentReducer(state: CurrentStateT = { current: null }, action:
       };
 
     case ActionTypes.CURRENT_RESET_REQUEST:
-      return { current: 'onProcess' };
+      return {current: 'onProcess'};
 
     case ActionTypes.CURRENT_RESET_SUCCESS:
-      return { current: null };
+      return initialState;
 
     case ActionTypes.CURRENT_RESET_FAILURE:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

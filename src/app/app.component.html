@@ -1,4 +1,4 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <span>{{title}}</span>
   <span class="spacer"></span>
   <div *ngIf="currentState$ | async; let state">
@@ -6,8 +6,8 @@
       {{ state.payload.username}}
       <msp-auth-logout-button></msp-auth-logout-button>
     </div>
-    <template #goLogin>
+    <ng-template #goLogin>
       <msp-auth-dialog-button></msp-auth-dialog-button>
-    </template>
+    </ng-template>
   </div>
-</md-toolbar>
+</mat-toolbar>

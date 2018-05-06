@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -19,7 +19,7 @@ import { Animations } from '../animations';
   selector: 'msp-confirm-registration-widget',
   templateUrl: './confirm-registration-widget.component.html',
   styleUrls: ['./confirm-registration-widget.component.css'],
-  animations: [Animations.swipeInOut],
+  // animations: [Animations.swipeInOut],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmRegistrationWidgetComponent implements OnInit, OnDestroy {
@@ -30,7 +30,7 @@ export class ConfirmRegistrationWidgetComponent implements OnInit, OnDestroy {
   onDestroy$ = new Subject<true>();
   resend$ = new Subject<true>();
 
-  constructor(public store: Store<AppStateT>, public snackBar: MdSnackBar) { }
+  constructor(public store: Store<AppStateT>, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.confirmRgistrationState$ = this.store.select(fromConfirmRegistration.getConfirmRegistrationState);
@@ -38,20 +38,20 @@ export class ConfirmRegistrationWidgetComponent implements OnInit, OnDestroy {
     this.submit$
       .withLatestFrom(this.codeValidator$)
       .map(([_, codeValidator]) => codeValidator)
-      .filter<ValidT<CodeT>>(codeValidator => codeValidator.isValid)
+      .filter(codeValidator => codeValidator.isValid)
       .withLatestFrom(
         this.store.select(fromCredential.getCredentialState)
           .takeUntil(this.onDestroy$)
           .map(state => state.username)
       )
       .subscribe(([codeValidator, username]) => {
-        const code = codeValidator.payload.code;
+        const code = (<ValidT<CodeT>>codeValidator).payload.code;
         this.store.dispatch(new fromConfirmRegistration.ConfirmRegistrationRequestAction(username, code));
       });
 
     this.store.select(fromConfirmRegistration.getConfirmRegistrationState)
       .takeUntil(this.onDestroy$)
-      .filter<fromConfirmRegistration.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .withLatestFrom(
         this.store.select(fromCredential.getCredentialState)
           .takeUntil(this.onDestroy$)
@@ -62,12 +62,12 @@ export class ConfirmRegistrationWidgetComponent implements OnInit, OnDestroy {
 
     this.store.select(fromLogin.getLoginState)
       .takeUntil(this.onDestroy$)
-      .filter<fromLogin.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .subscribe(() => this.store.dispatch(new fromCurrent.CurrentRequestAction()));
 
     this.store.select(fromResendCode.getResendCodeState)
       .takeUntil(this.onDestroy$)
-      .filter<fromResendCode.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .withLatestFrom(
         this.store.select(fromCredential.getCredentialState)
           .takeUntil(this.onDestroy$)

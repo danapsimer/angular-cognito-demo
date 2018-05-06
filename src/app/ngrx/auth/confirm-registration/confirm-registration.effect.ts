@@ -15,8 +15,7 @@ import { UserRegistrationService } from '../../../modules/services/aws-cognito/u
 export class ConfirmRegistrationEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.CONFIRM_REGISTRATION_REQUEST)
-    .filter<ConfirmRegistrationRequestAction>(action => action instanceof ConfirmRegistrationRequestAction)
+    .ofType<ConfirmRegistrationRequestAction>(ActionTypes.CONFIRM_REGISTRATION_REQUEST)
     .switchMap(
       action => this.userRegistrationService.confirmRegistration$(action.username, action.confirmationCode)
         .mapTo(new ConfirmRegistrationSuccessAction())

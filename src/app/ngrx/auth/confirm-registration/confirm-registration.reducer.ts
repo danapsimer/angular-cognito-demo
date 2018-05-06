@@ -19,7 +19,9 @@ export type OnResetT = {
 
 export type ConfirmRegistrationStateT = OnProcessT | OnSuccessT | OnFailureT | OnResetT;
 
-export function confirmRegistrationReducer(state: ConfirmRegistrationStateT = {current: null}, action: Actions): ConfirmRegistrationStateT {
+export const initialState: ConfirmRegistrationStateT = {current: null};
+
+export function confirmRegistrationReducer(state: ConfirmRegistrationStateT = initialState, action: Actions): ConfirmRegistrationStateT {
   switch (action.type) {
     case ActionTypes.CONFIRM_REGISTRATION_REQUEST:
       return { current: 'onProcess' };
@@ -34,7 +36,7 @@ export function confirmRegistrationReducer(state: ConfirmRegistrationStateT = {c
       };
 
     case ActionTypes.CONFRIM_REGISTRATION_RESET:
-      return { current: null };
+      return initialState;
 
     default:
       return state;

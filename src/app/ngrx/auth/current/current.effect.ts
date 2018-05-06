@@ -17,8 +17,7 @@ import { Observable } from 'rxjs/Observable';
 export class CurrentEffects {
 
   @Effect() init$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.CURRENT_INIT)
-    .filter<CurrentInitAction>(action => action instanceof CurrentInitAction)
+    .ofType<CurrentInitAction>(ActionTypes.CURRENT_INIT)
     .switchMapTo(
       this.userLoginService.isInitAuthenticated$()
         .mapTo(new CurrentRequestAction())
@@ -26,8 +25,7 @@ export class CurrentEffects {
     );
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.CURRENT_REQUEST)
-    .filter<CurrentRequestAction>(action => action instanceof CurrentRequestAction)
+    .ofType<CurrentRequestAction>(ActionTypes.CURRENT_REQUEST)
     .switchMapTo(
     Observable.of({ username: 'Jason', picture: 'Jason picture' })
       .map(({username, picture}) => new CurrentSuccessAction(username, picture))
@@ -35,8 +33,7 @@ export class CurrentEffects {
     );
 
   @Effect() reset$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.CURRENT_RESET_REQUEST)
-    .filter<CurrentResetRequestAction>(action => action instanceof CurrentResetRequestAction)
+    .ofType<CurrentResetRequestAction>(ActionTypes.CURRENT_RESET_REQUEST)
     .switchMapTo(
     this.userLoginService.logout()
       .mapTo(new CurrentResetSuccessAction())

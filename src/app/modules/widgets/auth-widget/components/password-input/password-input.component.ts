@@ -8,12 +8,13 @@ import { FormValidationService, ValidationT, PasswordT } from '../../services/fo
 import { Animations } from '../animations';
 
 import { Observable } from 'rxjs/Observable';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'msp-password-input',
   templateUrl: './password-input.component.html',
   styleUrls: ['./password-input.component.css'],
-  animations: [Animations.opacity],
+  // animations: [Animations.opacity],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordInputComponent implements OnInit {
@@ -48,7 +49,7 @@ export class PasswordInputComponent implements OnInit {
       .filter(isInputting => !isInputting)
       .withLatestFrom(password$)
       .map(([_, password]) => this.formValidationService.passwordValidator(password))
-      .do(validation => this.validator.emit(validation));
+      .pipe(tap(validation => this.validator.emit(validation)));
   }
 
 }

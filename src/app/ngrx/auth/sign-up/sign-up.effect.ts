@@ -10,8 +10,7 @@ import { UserRegistrationService } from '../../../modules/services/aws-cognito/u
 export class SignUpEffects {
 
   @Effect() request$: Observable<Action> = this.actions$
-    .ofType(ActionTypes.SIGN_UP_REQUEST)
-    .filter<SignUpRequestAction>(action => action instanceof SignUpRequestAction)
+    .ofType<SignUpRequestAction>(ActionTypes.SIGN_UP_REQUEST)
     .switchMap(
       action => this.userRegistrationService.register$(action.alias, action.password)
         .map(({username}) => new SignUpSuccessAction(username))

@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ChangeDetectionStrategy, TemplateRef } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ChangeDetectionStrategy, TemplateRef} from '@angular/core';
 
-import { UserInteractionService } from './services/user-interaction/user-interaction.service';
-import { MobileContentService } from './services/mobile-content/mobile-content.service';
-import { FormValidationService } from './services/form-validation/form-validation.service';
+import {UserInteractionService} from './services/user-interaction/user-interaction.service';
+import {MobileContentService} from './services/mobile-content/mobile-content.service';
+import {FormValidationService} from './services/form-validation/form-validation.service';
 
 // ngrx
-import { Store } from '@ngrx/store';
-import { AppStateT } from '../../../ngrx';
+import {Store} from '@ngrx/store';
+import {AppStateT} from '../../../ngrx';
 import * as fromSignUp from '../../../ngrx/auth/sign-up/sign-up.store';
 import * as fromCredential from '../../../ngrx/auth/credential/credential.store';
 import * as fromForgotPassword from '../../../ngrx/auth/forgot-password/forgot-password.store';
 
 // rxjs
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   // selector: 'auth-widget',
@@ -23,7 +23,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthWidgetComponent implements OnInit, OnDestroy {
-  @ViewChild('targetRef', { read: ViewContainerRef })
+  @ViewChild('targetRef', {read: ViewContainerRef})
   targetRef: ViewContainerRef;
 
   @ViewChild('landingRef')
@@ -44,7 +44,8 @@ export class AuthWidgetComponent implements OnInit, OnDestroy {
 
   onDestroy$ = new Subject<true>();
 
-  constructor(private vcf: ViewContainerRef, public store: Store<AppStateT>) { }
+  constructor(private vcf: ViewContainerRef, public store: Store<AppStateT>) {
+  }
 
   ngOnInit() {
     this.viewStack = new ViewStack(this.targetRef);
@@ -52,13 +53,13 @@ export class AuthWidgetComponent implements OnInit, OnDestroy {
 
     this.store.select(fromForgotPassword.getForgotPasswordState)
       .takeUntil(this.onDestroy$)
-      .filter<fromForgotPassword.OnSuccessT>(state => state.current === 'onSuccess')
+      .filter(state => state.current === 'onSuccess')
       .subscribe(() => this.viewStack.push(this.confirmNewPasswordRef));
 
     this.store.select(fromSignUp.getSignUpState)
       .takeUntil(this.onDestroy$)
-      .filter<fromSignUp.OnSuccessT>(state => state.current === 'onSuccess')
-      .map(state => state.payload.username)
+      .filter(state => state.current === 'onSuccess')
+      .map((state: fromSignUp.OnSuccessT) => state.payload.username)
       .subscribe(username => {
         this.store.dispatch(new fromCredential.CredentialPutUsernameAction(username));
         this.viewStack.push(this.confirmRegistrationRef);
@@ -67,6 +68,10 @@ export class AuthWidgetComponent implements OnInit, OnDestroy {
 
   onForgotPassword() {
     this.viewStack.push(this.forgotPasswordRef);
+  }
+
+  onResetPasswordRequired() {
+    this.viewStack.push(this.confirmNewPasswordRef);
   }
 
   transitBackward() {
@@ -86,7 +91,8 @@ export class ViewStack {
     return this.stack.length;
   }
 
-  constructor(private vcf: ViewContainerRef) { }
+  constructor(private vcf: ViewContainerRef) {
+  }
 
   push(tf: TemplateRef<any>) {
     if (this.stack.length !== 0) {
